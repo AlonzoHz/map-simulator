@@ -1,0 +1,4 @@
+Water - 150 to 250 Blue, darker is deeper and harder to traverse. Depths harder than 230 can't be traversed without (advanced) boats.
+Land - 150 to 250 Green, darker is more thickly wooded and harder to traverse.
+Mountain - 0 - 250 Gray, darker is higher peaks and harder to traverse.
+Population - 150 to 250 Red, darker is more densely populated.
