@@ -1,35 +1,23 @@
 import java.awt.Color;
-import java.util.ArrayList;
 
 public class Population extends WorldObject {
-    int density;
+    double density;
+    double averageAge = 30;
 
-    int settleFactor = 3000;
-    int bestFindX;
-    int bestFindY;
-    int bestFind = 0;
-    ArrayList<Location> visited;
+    int settleFactor = 800;
     
     boolean settled;
 
     WorldObject under;
 
-    public Population(int x, int y, int density) {
+    public Population(int x, int y, double density) {
         super(x, y);
         this.density = density;
         under = new WorldObject(x, y);
-        bestFindX = x;
-        bestFindY = y;
-        visited = new ArrayList<>();
-        visited.add(new Location(x, y));
     }
 
     public Color getColor() {
-        if (settled) {
-            return Color.MAGENTA;
-        }
-
-        return new Color(250 - density, 0, 0);
+        return new Color(250 - (int) density, 0, 0);
     }
 
     public void update(World world) {
@@ -52,9 +40,16 @@ public class Population extends WorldObject {
                 }
             }
             moveTo(world, maxX, maxY);
-            settleFactor -= density;
+            settleFactor -= (int) Math.round(density);
             //todo: create settler class
-            //todo: create falling settlement threshold
+            //todo: settle when been in an area for a long time
+            //todo: emphasize exploration of new places vs going back
+            //todo: remember best places visited
+        } else {
+            //improve growth curve
+            double growthFactor = density / (2 + (((averageAge - 30) * (averageAge - 30))) + Math.random());
+            averageAge = ((density * (averageAge + 1)) / (density + growthFactor));
+            density = Math.min(density + growthFactor, 100);
         }
     }
 
